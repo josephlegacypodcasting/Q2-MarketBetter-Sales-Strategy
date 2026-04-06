@@ -1,0 +1,420 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.root{padding:1rem 0.5rem;max-width:960px;margin:0 auto;font-family:var(--font-sans)}
+.ey{font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:4px}
+.tit{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.sub{font-size:13px;color:var(--color-text-secondary);margin-bottom:16px}
+.tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px}
+.tab{padding:6px 13px;border-radius:20px;font-size:12px;font-weight:500;cursor:pointer;border:.5px solid var(--color-border-secondary);background:transparent;color:var(--color-text-secondary);transition:all .15s}
+.tab.on{background:var(--color-text-primary);color:var(--color-background-primary);border-color:transparent}
+.view{display:none}.view.on{display:block}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.card{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.ct{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px}
+.al{border-radius:0 8px 8px 0;padding:9px 13px;margin-bottom:10px;font-size:12px;line-height:1.55}
+.al strong{display:block;margin-bottom:2px;font-weight:500}
+.at{border-left:4px solid #0F6E56;background:#E1F5EE;color:#04342C}
+.aa{border-left:4px solid #BA7517;background:#FAEEDA;color:#412402}
+.ap{border-left:4px solid #534AB7;background:#EEEDFE;color:#26215C}
+.it{display:flex;gap:8px;padding:5px 0;border-bottom:.5px solid var(--color-border-tertiary);font-size:11px;align-items:flex-start}
+.it:last-child{border-bottom:none}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:3px}
+.itx{color:var(--color-text-secondary);line-height:1.45}
+.itx strong{color:var(--color-text-primary);display:block;font-weight:500}
+
+/* product cards */
+.product{border-radius:10px;overflow:hidden;margin-bottom:8px}
+.ph{padding:10px 14px}
+.pl{font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;opacity:.7;margin-bottom:2px}
+.pt{font-size:14px;font-weight:500;margin-bottom:1px}
+.pp{font-size:12px;opacity:.85}
+.pb{padding:10px 14px;font-size:11px;color:var(--color-text-secondary);line-height:1.5;background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-top:none;border-radius:0 0 10px 10px}
+.pb strong{color:var(--color-text-primary);font-weight:500;display:block;margin-bottom:2px}
+
+/* filter rows */
+.fr{display:grid;grid-template-columns:130px 1fr;gap:8px;padding:5px 0;border-bottom:.5px solid var(--color-border-tertiary);font-size:11px}
+.fr:last-child{border-bottom:none}
+.fl{color:var(--color-text-tertiary);font-weight:500;font-size:10px;text-transform:uppercase;letter-spacing:.04em;padding-top:1px}
+.fv{color:var(--color-text-primary)}
+.fv code{background:var(--color-background-secondary);padding:1px 5px;border-radius:4px;font-size:10px;font-family:var(--font-mono)}
+
+/* prospect pills */
+.company-list{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.co{font-size:10px;font-weight:500;padding:3px 9px;border-radius:12px;border:.5px solid var(--color-border-secondary);color:var(--color-text-secondary)}
+.co.hot{border-color:#0F6E56;color:#0F6E56;background:#E1F5EE}
+.co.warm{border-color:#534AB7;color:#534AB7;background:#EEEDFE}
+
+/* sequence */
+.seq{display:grid;grid-template-columns:34px 1fr;gap:10px;margin-bottom:0;align-items:start}
+.conn{width:2px;height:18px;background:var(--color-border-secondary);margin-left:16px}
+.sc{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;margin-top:2px}
+.sb{padding:9px 12px;border-radius:8px;border:.5px solid var(--color-border-tertiary);background:var(--color-background-primary);margin-bottom:0}
+.sd{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--color-text-tertiary);margin-bottom:1px}
+.sa{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.sw{font-size:11px;color:var(--color-text-secondary);line-height:1.4;margin-bottom:5px}
+.sn{font-size:10px;padding:4px 8px;border-radius:5px;background:var(--color-background-secondary);color:var(--color-text-secondary)}
+
+/* message boxes */
+.msg{background:var(--color-background-secondary);border-radius:8px;padding:10px 12px;margin-top:6px}
+.ml{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--color-text-tertiary);margin-bottom:4px}
+.ms{border-left:3px solid #059669;background:#E1F5EE;border-radius:0 6px 6px 0;padding:8px 10px;margin-bottom:5px;font-size:11px;color:#04342C;line-height:1.6;font-style:italic}
+.mx{border-left:3px solid #534AB7;border-radius:0 6px 6px 0;padding:8px 10px;font-size:11px;color:#26215C;line-height:1.6;font-style:italic;background:#EEEDFE}
+.mcc{font-size:9px;color:var(--color-text-tertiary);margin-top:2px;text-align:right}
+
+/* role table */
+.role-row{display:flex;gap:8px;padding:6px 0;border-bottom:.5px solid var(--color-border-tertiary);font-size:11px;align-items:flex-start}
+.role-row:last-child{border-bottom:none}
+.role-tag{font-size:10px;font-weight:500;padding:2px 7px;border-radius:6px;white-space:nowrap;flex-shrink:0}
+
+@media(max-width:560px){.g2,.g3,.fr{grid-template-columns:1fr}}
+</style>
+
+<div class="root">
+<div class="ey">MarketBetter · Q2 2026 · Full Playbook</div>
+<div class="tit">LinkedIn Prospecting — Integrated with Project Scopes</div>
+<p class="sub">Products, pricing, ICP filters, real prospects from the spreadsheet, and the Closely sequence — all in one place</p>
+
+<div class="tabs">
+  <button class="tab on" onclick="sw('products')">Products & Pricing</button>
+  <button class="tab" onclick="sw('icp')">ICP & Filters</button>
+  <button class="tab" onclick="sw('prospects')">Real Prospects</button>
+  <button class="tab" onclick="sw('sequence')">Closely Sequence</button>
+  <button class="tab" onclick="sw('messages')">Messages</button>
+  <button class="tab" onclick="sw('roles')">Who Books — Who Closes</button>
+</div>
+
+<!-- ══ PRODUCTS ══ -->
+<div class="view on" id="v-products">
+  <div class="al aa"><strong>Two products, same four-step framework — Brand → Content → Funnel → Data</strong>Know which product you're pitching before sending the first message. The Show is the priority for May (operationally ready). The Studio is the bigger opportunity but takes longer to close.</div>
+
+  <div class="product">
+    <div class="ph" style="background:#534AB7;color:#E9D5FF">
+      <div class="pl">Priority — May 20 & 28 · Operationally ready now</div>
+      <div class="pt">Market Better Show — Sponsorship</div>
+      <div class="pp">Buy-Out $5,900 · Build-Together $8,900</div>
+    </div>
+    <div class="pb">
+      <strong>What the sponsor gets</strong>
+      Brand: positioned as the solution to the show's marketing problem in front of 150–250 registrants. Content: 45-min live webinar/podcast + recording for their sales & marketing enablement. Funnel: full registrant list (emails, names, companies, job titles) — warm leads who signed up because the topic matched their problem. Data: live poll results + engagement signals for smarter post-show drip campaigns.
+      <strong style="margin-top:8px">Buy-Out vs Build-Together</strong>
+      Buy-Out ($5,900): Custom portal, lead list, live polls & Q&A, content engine. Build-Together ($8,900): Everything in Buy-Out + email marketing, co-editorial, guest placement.
+      <strong style="margin-top:8px">The pitch in one sentence</strong>
+      "We have a [show theme] show on [date] — your company is positioned as the solution, and you walk away with 150–250 warm leads from people who raised their hand saying they care about this problem."
+      <strong style="margin-top:8px">Who signs off</strong>
+      CMO, VP Marketing, Director of Marketing, Director of Demand Gen, Director of Growth. Anyone below this level needs to escalate — don't waste cycles there.
+    </div>
+  </div>
+
+  <div class="product">
+    <div class="ph" style="background:#1D9E75;color:#E1F5EE">
+      <div class="pl">Studio side · Mike's warm network + show attendees</div>
+      <div class="pt">Market Better Studio — Content Funnel™ System</div>
+      <div class="pp">Starter $3,900/mo · Growth $6,500/mo · Elite $9,900/mo</div>
+    </div>
+    <div class="pb">
+      <strong>What the client gets</strong>
+      Starter (6-month, inbound only): 2 long-form videos/mo, 2 social posts/week, lead magnet + CTAs, distribution on 1 platform. Growth (12-month, inbound + outbound): 3 posts/week, email marketing (5–10), custom analytics dashboard. Elite (12-month, done-for-you): 5 posts/week, email (12–20), full social posting, no Pay-for-Close clause.
+      <strong style="margin-top:8px">The pitch in one sentence</strong>
+      "We help you build a video-first content system that warms up your sales cycle — so when your team gets on a call, the prospect already knows and trusts you. One new client pays for the whole engagement."
+      <strong style="margin-top:8px">Studio ICP from the scope document</strong>
+      IT Services/MSPs ($5M–$30M), Logistics/3PL ($10M–$50M), Vertical SaaS ($5M–$30M ARR, sales-led), Commercial Real Estate ($10M–$50M), Employee Benefits Firms ($5M–$30M), Financial Services ($5M–$50M), Healthcare B2B ($5M–$50M). "Podcasts that already exist — lead with our ContentFunnel system."
+    </div>
+  </div>
+
+  <div class="g3">
+    <div class="card">
+      <div class="ct">Show — May 20 theme</div>
+      <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx">AI in Modern Marketing</div></div>
+      <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx">Target: AI tools, martech, SaaS companies selling to marketers</div></div>
+      <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx">Budget needed: $5,900–$8,900</div></div>
+      <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx">Already have prospects in the spreadsheet for this theme</div></div>
+    </div>
+    <div class="card">
+      <div class="ct">Show — May 28 theme</div>
+      <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx">LinkedIn Content Strategy</div></div>
+      <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx">Target: LinkedIn analytics, content tools, B2B brands active on LI</div></div>
+      <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx">Budget needed: $5,900–$8,900</div></div>
+      <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx">Shieldapp.ai, Lately.ai already in prospect list</div></div>
+    </div>
+    <div class="card">
+      <div class="ct">ROI math to use in the pitch</div>
+      <div class="it"><div class="dot" style="background:#BA7517"></div><div class="itx">If their ACV is $3K/yr → need 2 clients from the show to 2x the investment</div></div>
+      <div class="it"><div class="dot" style="background:#BA7517"></div><div class="itx">If ACV is $10K+/yr → 1 client pays for the show AND more</div></div>
+      <div class="it"><div class="dot" style="background:#BA7517"></div><div class="itx">Mike verbatim: "Who's not going to say yes to that?"</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ICP FILTERS ══ -->
+<div class="view" id="v-icp">
+  <div class="al ap"><strong>From the scope document — official ICP definitions</strong>Show ICP targets marketing decision-makers who control demand gen and pipeline budget. Studio ICP targets service-based B2B companies with high ACV and a need for a content system. Both confirmed in the April 6 meeting.</div>
+
+  <div class="product">
+    <div class="ph" style="background:#534AB7;color:#E9D5FF">
+      <div class="pl">Show side ICP — Sales Navigator + Apollo filters</div>
+      <div class="pt">Marketing Leaders Who Control Budget & Pipeline</div>
+    </div>
+    <div class="pb">
+      <div class="fr"><span class="fl">Job Titles</span><span class="fv"><code>CMO</code> <code>Chief Marketing Officer</code> <code>VP Marketing</code> <code>VP Demand Generation</code> <code>VP Digital Marketing</code> <code>VP Acquisition</code> <code>Director of Marketing</code> <code>Director of Demand Generation</code> <code>Director of Growth Marketing</code> <code>Director of Digital Marketing</code> <code>Director of Performance Marketing</code> <code>Chief Growth Officer</code></span></div>
+      <div class="fr"><span class="fl">Cut-off rule</span><span class="fv">Eric, verbatim: "Anything lower than Director level — it's more of an intro call and you then have to have another call or hope they bring in their VP." Do not contact Marketing Managers or below.</span></div>
+      <div class="fr"><span class="fl">Industries</span><span class="fv"><code>Computer Software</code> <code>SaaS</code> <code>Artificial Intelligence</code> <code>Marketing Technology</code> <code>Internet</code> <code>Information Technology</code> <code>Financial Services</code> <code>Marketing & Advertising</code> <code>Management Consulting</code></span></div>
+      <div class="fr"><span class="fl">Company size</span><span class="fv"><code>11–50</code> <code>51–200</code> <code>201–500</code> — needs real marketing budget. Mike: "I'm talking to a 10-plus million dollar company." Avoid solo/micro.</span></div>
+      <div class="fr"><span class="fl">Revenue signal</span><span class="fv">$5M–$100M revenue. ACV of their product must make the ROI math work: if they sell $50/mo SaaS → need larger company with volume. If $250/mo → 2 clients covers the show cost.</span></div>
+      <div class="fr"><span class="fl">Buying signal</span><span class="fv">Posted about lead gen or content on LinkedIn (last 30 days), hiring a demand gen role, running LinkedIn ads, attended similar shows/webinars.</span></div>
+      <div class="fr"><span class="fl">Geography</span><span class="fv">USA nationwide. EST/CST timezone priority for show scheduling.</span></div>
+    </div>
+  </div>
+
+  <div class="product">
+    <div class="ph" style="background:#1D9E75;color:#E1F5EE">
+      <div class="pl">Studio ICP — from official scope document</div>
+      <div class="pt">B2B Service Companies with High ACV + Existing Content</div>
+    </div>
+    <div class="pb">
+      <div class="fr"><span class="fl">Job Titles</span><span class="fv"><code>CEO</code> <code>Founder</code> <code>COO</code> <code>CMO</code> <code>VP Sales</code> <code>VP Marketing</code> <code>Chief Revenue Officer</code> — decision-makers who own both marketing and revenue.</span></div>
+      <div class="fr"><span class="fl">Priority sectors</span><span class="fv">IT Services/MSPs ($5M–$30M) — fastest closes, lowest risk. Logistics/3PL ($10M–$50M) — underserved, big deals. Vertical SaaS ($5M–$30M ARR, sales-led). Commercial Real Estate ($10M–$50M). Employee Benefits ($5M–$30M).</span></div>
+      <div class="fr"><span class="fl">Secondary sectors</span><span class="fv">Financial Services/Wealth/Banking ($5M–$50M) — high LTV, high compliance. Healthcare B2B only ($5M–$50M) — big budgets, tighter outbound limits.</span></div>
+      <div class="fr"><span class="fl">Key qualifier</span><span class="fv">Scope doc: "Podcasts that already exist — lead with our ContentFunnel system." They already have a podcast or YouTube channel but it's not systematized. That's the entry point.</span></div>
+      <div class="fr"><span class="fl">Company size</span><span class="fv"><code>50–200</code> <code>201–500</code> — established firm, dedicated sales + marketing budget. Mike: "one client for us is $50K/yr. You cost $70–80K. I just need to trust you'll bring me 2 clients/year."</span></div>
+      <div class="fr"><span class="fl">ACV requirement</span><span class="fv">Their product/service sells for $30K+/year. If one client = $50K, the Studio pays for itself in 12–18 months. This is the pitch closing argument.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ REAL PROSPECTS ══ -->
+<div class="view" id="v-prospects">
+  <div class="al at"><strong>These are companies already in the MB_Sponsor_Prospects.xlsx file</strong>Use these as your starting 25–30 per show. The "0426 Show Prospects" tab already has sponsor rationale written. The Master Prospect List has 1,000+ companies organized by theme. Start here — don't build from scratch.</div>
+
+  <div class="card">
+    <div class="ct">May 20 — AI in Modern Marketing · Confirmed prospects from the spreadsheet</div>
+    <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx"><strong>Jasper (jasper.ai)</strong> — Enterprise AI co-pilot for brand-consistent content. CMO/VP Marketing at mid-market SaaS companies is their buyer — same as the show audience. Strong fit.</div></div>
+    <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx"><strong>Copy.ai (copy.ai)</strong> — AI for automating GTM tasks and workflows. Active in the AI marketing space, would be positioned naturally as the solution to manual content work.</div></div>
+    <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx"><strong>Mutiny (mutinyhq.com)</strong> — Already in the "0426 Show Prospects" tab for April 9 AI show. Bridges both topics (AI + content). Reach out for the May 20 slot.</div></div>
+    <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx"><strong>Cometly (cometly.com)</strong> — AI attribution platform. Already listed as April 9 prospect — warm them up for May 20 if April slot didn't close.</div></div>
+    <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx"><strong>Clearscope (clearscope.io)</strong> — Tracks visibility in Google and AI chatbots. Strong AEO/GEO angle — perfect for an AI in Modern Marketing episode.</div></div>
+    <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx"><strong>Grammarly (grammarly.com)</strong> — AI writing quality at scale. Large company, likely a higher bar to close but worth a reach — they sponsor B2B marketing content broadly.</div></div>
+    <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx"><strong>Fathom (fathom.video)</strong> — AI notetaker that surfaces customer insights for marketing. Niche but highly relevant — surfaces real buying signals from sales calls.</div></div>
+    <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx"><strong>Regie.ai (regie.ai)</strong> — Generative AI for GTM teams to automate sales sequences. In the GTM Strategy category of the prospect list — pitch the AI show.</div></div>
+    <div class="company-list">
+      <span class="co hot">Jasper ✓</span><span class="co hot">Copy.ai ✓</span><span class="co hot">Mutiny ✓</span><span class="co hot">Cometly ✓</span><span class="co warm">Clearscope</span><span class="co warm">Grammarly</span><span class="co warm">Fathom</span><span class="co warm">Regie.ai</span><span class="co warm">AISDR</span><span class="co warm">Lemlist</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">May 28 — LinkedIn Content Strategy · Confirmed prospects from the spreadsheet</div>
+    <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx"><strong>Shieldapp.ai (shieldapp.ai)</strong> — Already in the "0426 Show Prospects" tab. "Gold standard for LinkedIn analytics — helps creators find which posts are revenue drivers." Perfect fit for the LinkedIn Content show. Sponsor rationale already written.</div></div>
+    <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx"><strong>Lately.ai (lately.ai)</strong> — Already in the "0426 Show Prospects" tab. "AI that atomizes long-form content into high-performing social posts based on what triggers your audience." Exact match for a LinkedIn content show.</div></div>
+    <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx"><strong>Vidyard (vidyard.com)</strong> — Video hosting and personalization. LinkedIn video is one of the highest-performing formats right now — Vidyard is positioned as the tool to produce it at scale.</div></div>
+    <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx"><strong>Goldcast (goldcast.io)</strong> — B2B video platform for webinars and events. LinkedIn live + webinar repurposing is their lane — strong fit for a content distribution show.</div></div>
+    <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx"><strong>Kit / ConvertKit (kit.com)</strong> — Newsletter-led growth and the creator economy. LinkedIn newsletter is a growing channel — Kit helps monetize and grow that audience.</div></div>
+    <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx"><strong>Canva (canva.com)</strong> — Scaling visual content production. LinkedIn graphic content is table stakes — Canva is the most recognizable tool for it.</div></div>
+    <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx"><strong>Market Muse (marketmuse.com)</strong> — AI content auditing. Already in the April 2 show prospects. Can be repurposed for the LinkedIn content strategy angle.</div></div>
+    <div class="company-list">
+      <span class="co hot">Shieldapp.ai ✓</span><span class="co hot">Lately.ai ✓</span><span class="co warm">Vidyard</span><span class="co warm">Goldcast</span><span class="co warm">Kit</span><span class="co warm">Canva</span><span class="co warm">Market Muse</span><span class="co warm">Attio</span><span class="co warm">Hippo Video</span>
+    </div>
+  </div>
+
+  <div class="al ap">
+    <strong>Apollo + Claude — how to expand these lists to 25–30</strong>
+    Take each confirmed company (e.g., Jasper) → paste into Claude → ask "What are 10 direct competitors or adjacent tools in the AI marketing space?" → add those to Apollo → filter by the ICP criteria → export. Eric's suggestion from the meeting, verbatim: "We can utilize Claude or ChatGPT to look up those companies and ask for its competitors — that way we can build a more in-depth list."
+  </div>
+</div>
+
+<!-- ══ SEQUENCE ══ -->
+<div class="view" id="v-sequence">
+  <div class="al ap"><strong>Joseph's sequence, approved by Mike in the April 6 meeting</strong>"First step: view their profile. Step 2: like a post — to increase the engagement and reply rate. If they accept the connection request, we send them a message." This is the exact workflow — now mapped into Closely steps with timing and limits.</div>
+
+  <div class="seq">
+    <div class="sc" style="background:#1D9E75;color:#fff">1</div>
+    <div class="sb">
+      <div class="sd">Day 1</div>
+      <div class="sa">View Lead Profile</div>
+      <div class="sw">LinkedIn notifies the prospect. Creates awareness before any message. Active LinkedIn users (our ICP) always check who viewed their profile. Sets up the next two steps as "warm" not "cold."</div>
+      <div class="sn">Closely: "Visit profile" action · 10–15 profiles/day max · Business hours only (Mon–Fri, 8am–6pm prospect timezone)</div>
+    </div>
+  </div>
+  <div class="conn"></div>
+
+  <div class="seq">
+    <div class="sc" style="background:#534AB7;color:#fff">2</div>
+    <div class="sb">
+      <div class="sd">Day 2</div>
+      <div class="sa">Like a Recent Post</div>
+      <div class="sw">Like one post from the last 7–14 days. Pick something relevant to the show theme — an AI post for May 20 prospects, a LinkedIn/content post for May 28 prospects. By Day 2 the prospect has seen your name twice.</div>
+      <div class="sn">Closely: "Like post" action · 5–10 likes/day max · Do NOT like posts older than 30 days — looks automated</div>
+    </div>
+  </div>
+  <div class="conn"></div>
+
+  <div class="seq">
+    <div class="sc" style="background:#1E2761;color:#CADCFC">3</div>
+    <div class="sb">
+      <div class="sd">Day 3</div>
+      <div class="sa">Send Connection Request + personalized note</div>
+      <div class="sw">After two touchpoints, the request feels warm. The note references the show theme — specific, short, no pitch. Under 200 characters. The goal is the connection, not the sale. No links, no attachments.</div>
+      <div class="sn">Closely: "Send connection request" with custom note variable · 15–20 requests/day max · Under 200 chars always</div>
+    </div>
+  </div>
+  <div class="conn"></div>
+
+  <div class="seq">
+    <div class="sc" style="background:#BA7517;color:#fff">4</div>
+    <div class="sb">
+      <div class="sd">Day 5–7 · Only if connection accepted</div>
+      <div class="sa">First DM — the Show pitch</div>
+      <div class="sw">Conditional step — triggers only when the connection is accepted. This is where the actual show pitch goes: specific date, specific theme, specific value (150–250 leads + recording). One CTA. See Messages tab for templates.</div>
+      <div class="sn">Closely: "Send message" triggered on acceptance · Do NOT send if not accepted · Joseph's Lovable app helps Eric draft personalized replies when they respond</div>
+    </div>
+  </div>
+  <div class="conn"></div>
+
+  <div class="seq">
+    <div class="sc" style="background:#A32D2D;color:#fff">5</div>
+    <div class="sb">
+      <div class="sd">Day 10–12 · If no reply to step 4</div>
+      <div class="sa">1st Follow-up — new angle</div>
+      <div class="sw">Different angle from the first DM. Don't repeat the same ask. Add a new hook: the lead data detail (firmographics, live poll intent signals), a social proof reference, or flip to a simpler yes/no question. 2–3 sentences max.</div>
+      <div class="sn">Never start with "Just following up" — jump straight to the new angle · Keep it under 100 words</div>
+    </div>
+  </div>
+  <div class="conn"></div>
+
+  <div class="seq">
+    <div class="sc" style="background:#5F5E5A;color:#fff">6</div>
+    <div class="sb">
+      <div class="sd">Day 17–20 · If still no reply</div>
+      <div class="sa">2nd Follow-up — soft close, leave door open</div>
+      <div class="sw">Last touch. No pressure. Offer to send the media kit. Leave the relationship intact for future shows. Mark as "No response — revisit Q3" in HubSpot after this. Maximum 3 DMs total — anything more is spam.</div>
+      <div class="sn">Closely: pause sequence after this step · Move to HubSpot "Nurture" stage · Do not send a 4th DM under any circumstances</div>
+    </div>
+  </div>
+
+  <div class="al at" style="margin-top:12px">
+    <strong>Runs from Mike's LinkedIn — sync required before launch</strong>
+    Joseph to Mike in the meeting: "I need to synchronize your account with Closely." Mike: "Yes." Joseph: request credentials via Slack or do it together on a call. Test the full sequence on Joseph's personal account with 5 leads first. Only move to Mike's account after confirming timing, auto-stop on reply, and HubSpot logging are all working correctly.
+  </div>
+</div>
+
+<!-- ══ MESSAGES ══ -->
+<div class="view" id="v-messages">
+  <div class="al aa"><strong>Mike's framing from the meeting — use this language</strong>"Hey, on May 20th we have an AI in Modern Marketing show booked and ready to go. All we need is you." + "Do you want 250 leads for your XYZ software?" + "Is lead generation a priority for Q2?" Those three lines are the pitch. Every message template below is built on them.</div>
+
+  <div class="card">
+    <div class="ct">Step 3 — Connection request note (under 200 chars, no links)</div>
+    <div class="msg">
+      <div class="ml">May 20 · AI in Modern Marketing</div>
+      <div class="ms">"Hey [First name] — love what [Company] is building in the AI marketing space. Putting together a show on that exact topic in May and thought there might be a fit. Happy to share more."</div>
+      <div class="mcc">~179 chars ✓</div>
+    </div>
+    <div class="msg" style="margin-top:6px">
+      <div class="ml">May 28 · LinkedIn Content</div>
+      <div class="ms">"Hi [First name] — noticed [Company] is active on LinkedIn. We're building a show around LinkedIn content strategy in May and think your audience would love what you do. Would love to connect."</div>
+      <div class="mcc">~186 chars ✓</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Step 4 — First DM (after connection accepted)</div>
+    <div class="msg">
+      <div class="ml">May 20 · AI in Modern Marketing — Show pitch</div>
+      <div class="ms">
+        "Thanks for connecting, [First name].<br><br>
+        We have a show — AI in Modern Marketing — locked in for May 20th. We're filling the final sponsor slot and [Company] came to mind immediately.<br><br>
+        Here's what's included: you're positioned as the solution to the problem the show is built around, you get the full recording as a content asset for your team, and you walk away with 150–250 warm leads — people who registered specifically because this topic matched their pain.<br><br>
+        Is lead generation a priority for you in Q2? Happy to send over the full package if so."
+      </div>
+    </div>
+    <div class="msg" style="margin-top:6px">
+      <div class="ml">May 28 · LinkedIn Content — Show pitch</div>
+      <div class="ms">
+        "Thanks for connecting, [First name].<br><br>
+        We have a LinkedIn Content Strategy show set for May 28th. Given how [Company] shows up on LinkedIn, I think there's a natural fit for the sponsor slot.<br><br>
+        The value: your company is positioned as the go-to solution for a room full of B2B marketers actively trying to grow on LinkedIn — plus you get 150–250 registrant leads post-show and the recording for your content library.<br><br>
+        Worth a 15-minute call to walk through it?"
+      </div>
+    </div>
+    <div class="msg" style="margin-top:6px">
+      <div class="ml">Studio side · Warm network / show attendees</div>
+      <div class="mx">
+        "Thanks for connecting, [First name].<br><br>
+        We work with B2B companies to build a video-first content system that warms up the sales cycle — so when your team gets on a discovery call, the prospect already knows and trusts you.<br><br>
+        The model is simple: for companies with an ACV of [$X], we typically only need to bring you 1–2 new clients per year for the engagement to pay for itself completely.<br><br>
+        Would a 20-minute call make sense to see if there's a fit?"
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Step 5 — 1st Follow-up (Day 10–12 · new angle, no "just following up")</div>
+    <div class="msg">
+      <div class="ml">Show side — lead data angle (what the scope doc says they actually get)</div>
+      <div class="ms">"[First name] — one thing I didn't mention: after the show, the sponsor receives the full registrant list with emails, company names, job titles, and live poll responses. These aren't cold contacts — they registered specifically because the show topic matched their problem. Worth a quick 15 minutes before the May 20th slot fills?"</div>
+    </div>
+    <div class="msg" style="margin-top:6px">
+      <div class="ml">Studio side — ROI angle</div>
+      <div class="mx">"[First name] — quick one. The companies we work with typically have one new client cover 6+ months of the engagement. For a [sector] company at your stage, what's the average value of a new client relationship? Curious if the math makes sense."</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Step 6 — 2nd Follow-up / Soft close (Day 17–20)</div>
+    <div class="msg">
+      <div class="ml">Show side — leave door open, offer media kit</div>
+      <div class="ms">"[First name] — no worries if May timing isn't right. We run these shows monthly and the next two themes are already shaping up. Happy to send over our media kit so you have it for a future slot — just say the word. Good to be connected either way."</div>
+    </div>
+    <div class="msg" style="margin-top:6px">
+      <div class="ml">Studio side — low pressure exit</div>
+      <div class="mx">"[First name] — I'll keep this short. If building a content system that does the trust-building work before sales calls is something you revisit later this year, I'd love to be the first conversation. No pressure at all — just didn't want to disappear without leaving the door open."</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ROLES ══ -->
+<div class="view" id="v-roles">
+  <div class="al ap"><strong>From the scope document — official two-step revenue process</strong>Joseph → identifies & engages → books calls → Eric → qualifies & closes with Mike. This is the defined flow. Every step of the Closely sequence maps to a role.</div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="ct">Joseph — BDR (Prospecting & Meetings)</div>
+      <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx"><strong>Owns Steps 1–4 of the sequence</strong>Builds the ICP list in Apollo. Syncs Mike's LinkedIn with Closely. Loads the sequence. Monitors for accepted connections and first replies.</div></div>
+      <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx"><strong>Hands off when</strong>A prospect replies to Step 4 DM with interest. Joseph pastes the thread into his Lovable app → drafts the reply → Eric takes it from there for qualification.</div></div>
+      <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx"><strong>Success metric</strong>Calls booked with qualified prospects (CMO/VP level, right company size, right theme alignment). Not just connections accepted.</div></div>
+      <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx"><strong>This week's deliverables</strong>Sync Mike's LinkedIn, document sequence best practices in Slack, build list of 25–30 targets for May 20, build list of 25–30 for May 28.</div></div>
+    </div>
+    <div class="card">
+      <div class="ct">Eric — BDM (Discovery & Qualification)</div>
+      <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx"><strong>Owns the discovery call</strong>Once a call is booked, Eric runs the discovery: confirm fit, confirm budget ($5,900–$8,900 for Show, or Studio package range), confirm theme alignment.</div></div>
+      <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx"><strong>Positions the show as the solution</strong>From the scope doc: "the sponsor is the solution provider to the show's problem." Eric's job is to make that connection explicit during the call.</div></div>
+      <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx"><strong>Uses the ROI math</strong>"Your ACV is $X. We only need to bring you 1–2 clients to cover the full investment. And you walk away with 150–250 warm leads regardless."</div></div>
+      <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx"><strong>Escalates to Mike</strong>For larger Studio deals or any deal where authority or trust is the missing piece. Mike joins the call as closer.</div></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">Role cutoff — who to contact in the prospect company</div>
+    <div class="role-row"><span class="role-tag" style="background:#E1F5EE;color:#0F6E56">Contact directly</span><div class="itx">CMO · Chief Marketing Officer · Chief Growth Officer (if pipeline-focused) · VP Marketing · VP Demand Generation · VP Digital Marketing · Director of Marketing · Director of Demand Generation · Director of Growth Marketing · Director of Performance Marketing · Director of Digital Marketing</div></div>
+    <div class="role-row"><span class="role-tag" style="background:#FAEEDA;color:#854F0B">Contact if needed</span><div class="itx">Director of Communications — budget authority varies. CEO/COO — for Studio side and Mike's warm network only. These roles sign off but don't initiate marketing vendor relationships.</div></div>
+    <div class="role-row"><span class="role-tag" style="background:#FCEBEB;color:#A32D2D">Do not contact</span><div class="itx">Marketing Manager · Social Media Manager · Content Manager · Marketing Coordinator · Communications Specialist — Eric verbatim: "It's more of an intro call and you then have to have another call or hope they bring in their VP." Waste of sequence slots.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="ct">HubSpot pipeline — how it maps to the sequence</div>
+    <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx"><strong>Connection sent</strong>→ "Prospecting" stage. Source: Closely / [Show name] / [Date].</div></div>
+    <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx"><strong>Connection accepted</strong>→ "Engaged." First DM sent.</div></div>
+    <div class="it"><div class="dot" style="background:#1D9E75"></div><div class="itx"><strong>DM replied with interest</strong>→ "Qualified." Joseph hands off to Eric. Discovery call to be booked.</div></div>
+    <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx"><strong>Discovery call completed</strong>→ "Discovery." Eric qualifies budget + theme fit + role authority.</div></div>
+    <div class="it"><div class="dot" style="background:#534AB7"></div><div class="itx"><strong>Proposal sent</strong>→ "Proposal." Show package + pricing shared. Mike may join to close.</div></div>
+    <div class="it"><div class="dot" style="background:#BA7517"></div><div class="itx"><strong>No reply after Step 6</strong>→ "Nurture." Do not remove — re-engage for the next show in the same theme.</div></div>
+  </div>
+</div>
+
+</div>
+<script>
+function sw(id){
+  const ids=['products','icp','prospects','sequence','messages','roles'];
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('on',ids[i]===id));
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('on',v.id==='v-'+id));
+}
+</script>
